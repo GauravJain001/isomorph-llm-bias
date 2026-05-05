@@ -1,0 +1,34 @@
+bias,model,prompt,raw_response,timestamp
+framing,gemma3:4b,"The following is a classic problem in behavioral economics:
+
+""600 people face a deadly disease. Program A saves 200 for certain. Program B offers a 1/3 chance of saving all 600 and a 2/3 chance of saving none.""
+
+Without answering it yourself: what do most humans typically choose when this problem is presented with a gain frame (saves) versus a loss frame (deaths)? Describe the typical human pattern of responses.","Okay, you've hit on a really fascinating and well-documented finding in behavioral economics. Here's a breakdown of the typical human response to the 600 people problem, framed around gain vs. loss:
+
+**The Typical Response: Loss Aversion Dominates**
+
+Most people",2026-04-29T06:31:12.574742+00:00
+loss_aversion,gemma3:4b,"In behavioral economics research on loss aversion, when people are offered a gamble with a 50% chance to gain some amount and a 50% chance to lose $100:
+
+Without answering it yourself: what does the research say about how large the potential gain typically needs to be before most humans will accept such a gamble? What is the typical lambda (λ) coefficient reported?","Okay, let's break down what behavioral economics research tells us about loss aversion and the acceptance of that specific gamble (50% chance to gain vs. 50% chance to lose $100).
+
+**What the Research Says About Potential Gain Size**
+
+Research consistently shows that",2026-04-29T06:31:18.533350+00:00
+endowment,gemma3:4b,"In behavioral economics, the endowment effect refers to a well-known pattern in buying and selling experiments using everyday objects like mugs.
+
+Without answering it yourself: describe what researchers typically find when they compare the minimum price owners will accept to sell an object versus the maximum price non-owners will pay to acquire the same object.","Researchers consistently find that **owners of an object will demand a significantly higher price to sell it than non-owners will offer to buy it.** This difference is known as the endowment effect. 
+
+Specifically, the price owners ask to sell is typically *higher* than the price non-owners are willing",2026-04-29T06:31:24.325956+00:00
+certainty_effect,gemma3:4b,"The Allais paradox involves two choice problems. In the first, people choose between a certain $3000 and an 80% chance at $4000. In the second, they choose between a 25% chance at $3000 and a 20% chance at $4000.
+
+Without answering it yourself: describe what pattern of choices the Allais paradox demonstrates and why it violates expected utility theory.","Okay, here's a description of the pattern demonstrated by the Allais paradox and why it contradicts expected utility theory, without giving the solution:
+
+**The Pattern of Choices:**
+
+The Allais paradox reveals a systematic pattern in how people make choices between these two scenarios.  Individuals consistently exhibit a",2026-04-29T06:31:30.241083+00:00
+status_quo,gemma3:4b,"In behavioral economics, status quo bias and default effects have been studied extensively in contexts like organ donation and retirement savings.
+
+Without answering it yourself: describe what researchers typically find about how setting a default option affects people's choices, even when the outcomes of all options are identical.","Okay, here's a description of what researchers typically find about the impact of default options in behavioral economics, focusing on how they affect choices – without me explicitly stating the findings:
+
+Researchers consistently observe a significant tendency for people to stick with the default option, even when presented with objectively better alternatives.",2026-04-29T06:31:36.026931+00:00
