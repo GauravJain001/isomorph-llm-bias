@@ -18,7 +18,7 @@ We test **5 canonical behavioral economics paradigms** across **3 surface types*
 
 | Finding | Description |
 |---|---|
-| **Memorised biases** | Gemma3:4b shows zero framing effect on canonical scenarios but perfect effect on novel variants — evidence of memorisation |
+| **Memorised biases** | Gemma3:4b shows zero framing effect on canonical scenarios but perfect effect on novel variants  evidence of memorisation |
 | **Structurally absent loss aversion** | λ̂ ≤ 1.05 across all 24 model-surface-temperature combinations vs human λ ≈ 2.25–2.5 |
 | **Architecture-dependent Allais strategies** | GPT-4o-mini: 0% violation (consistent risk aversion). Gemma3:4b: 100% violation (memorised human pattern) |
 
