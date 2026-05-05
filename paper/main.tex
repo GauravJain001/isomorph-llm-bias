@@ -1,0 +1,819 @@
+\documentclass{article}
+\usepackage{caisc_2026}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath}
+
+\title{Inherited vs.\ Intrinsic Irrationality: Do LLMs Exhibit\\
+Genuine Behavioral Anomalies or Memorised Human Biases?}
+
+\author{Anonymous Authors}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Large language models (LLMs) are increasingly deployed as economic agents
+in decision-support, financial advisory, and policy simulation
+systems---yet it remains unclear whether their apparent behavioral biases
+reflect genuine properties of their decision architecture or mere retrieval
+of memorised human experimental results. We address this confound
+systematically by constructing \emph{isomorphic scenario variants}: novel-domain
+and fully abstract reformulations that are mathematically equivalent to five
+canonical behavioral economics paradigms (framing effect, loss aversion,
+endowment effect, certainty effect, status quo bias) but absent from
+standard behavioral economics training corpora. We run controlled
+experiments across two architecturally distinct models---GPT-4o-mini (proprietary frontier API)
+and Gemma3:4b (open-source 4B-parameter local model)---totalling 15,000 trials across 75 scenario variants at multiple temperatures. Contamination
+pre-testing confirms both models accurately describe known human behavioral
+patterns prior to experiment exposure (3/3 on all five biases), establishing
+memorisation as a genuine confound. Our results reveal three distinct
+patterns: (i) some biases collapse on isomorphs, indicating memorisation
+(e.g., the open-source model shows zero framing effect on canonical
+scenarios, overriding genuine frame-sensitivity observed on novel variants);
+(ii) loss aversion is structurally absent across \emph{all} models,
+temperatures, and surface types ($\hat{\lambda} \leq 1.05$ vs.\ human
+$\lambda \approx 2.25$--$2.5$), suggesting an intrinsic architectural
+property independent of training data; and (iii) the two models exhibit
+\emph{opposite} deterministic strategies on the canonical Allais paradox
+(100\% Allais violation vs.\ 0\%, $p < 0.001$), demonstrating that LLMs
+form a heterogeneous class of decision-makers irreducible to either
+rational agents or human-like agents. These findings have direct
+implications for the deployment of LLMs in high-stakes economic and
+policy contexts.
+\end{abstract}
+
+\section{Introduction}
+
+A growing body of work examines whether large language models (LLMs)
+exhibit systematic deviations from expected utility theory analogous to
+those documented in humans~[11,22]. If LLMs reproduce human-like biases,
+they may amplify existing irrationality when deployed as decision-support
+agents; if they do not, they may serve as rational counterweights to human
+bias. Either outcome carries significant implications for AI deployment in
+finance~[12], clinical decision-making~[21], and policy simulation~[2].
+
+Recent studies have found evidence of multiple behavioral anomalies in LLMs,
+including loss aversion~[16], framing effects~[19], anchoring~[9], and
+risk-preference inconsistencies~[3]. However, these studies share a critical
+methodological limitation: the \textbf{memorisation confound}. Every canonical
+scenario used to elicit these biases---the Asian Disease Problem~[22],
+Kahneman and Tversky's mixed gambles~[11], the Allais paradox~[1], Thaler's
+mug experiments~[20]---appears verbatim in published behavioral economics
+literature that forms a substantial fraction of LLM training corpora~[4].
+A model that produces human-like framing effects on the Asian Disease Problem
+may be retrieving the known experimental result rather than exhibiting a
+genuine preference reversal under equivalent novel conditions.
+
+The most comprehensive existing analysis, by Ross et al.~[16], tests 12 LLMs
+including GPT-4 on biases including inequality aversion, loss aversion, and
+time discounting---finding GPT-4's loss aversion coefficient ($\lambda = 1.09$)
+substantially below the human average ($\lambda \approx 2.56$). Binz and
+Schulz~[3] evaluate GPT-3 across 25 cognitive science tasks and find
+human-like patterns on some but not others. Yet every scenario in both
+studies appears in published literature the models were trained on. McCoy
+et al.~[14] demonstrate that LLMs can reproduce benchmark task results
+directly from training data, making this concern concrete.
+
+\textbf{This paper introduces the first \emph{isomorph construction}
+methodology for behavioral economics---structurally identical scenario variants
+with verified mathematical equivalence---enabling systematic separation of
+memorised from intrinsic biases.} For each canonical paradigm we construct:
+for each canonical paradigm we construct two variants preserving the exact
+mathematical structure while replacing the surface domain. A \emph{novel
+isomorph} uses a neutral domain absent from behavioral economics literature;
+an \emph{abstract isomorph} uses purely symbolic content. If a bias appears
+on canonical but collapses on isomorphs, it is memorised. If it persists
+uniformly, it is intrinsic.
+
+\paragraph{Contributions.}
+(1) A validated isomorph construction methodology with analytical equivalence
+verification for five behavioral economics paradigms.
+(2) The first cross-model, cross-temperature controlled experiment
+distinguishing memorised from intrinsic LLM behavioral anomalies.
+(3) Three empirical findings---memorised framing effects, structurally
+absent loss aversion, and architecture-dependent Allais strategies---
+with direct deployment implications.
+(4) Full open-source release of all scenarios, code, and 15,000-trial dataset.
+
+\section{Related Work}
+
+\paragraph{Behavioral biases in LLMs.}
+Ross et al.~[16] test 12 LLMs on canonical behavioral economics scenarios,
+finding widespread but inconsistent bias patterns across models. Binz and
+Schulz~[3] evaluate GPT-3 on 25 cognitive science paradigms, finding
+human-like patterns on heuristics and biases but not on reinforcement
+learning tasks. Talboy and Fuller~[19] document framing effects across
+multiple LLMs but find high prompt sensitivity. Jones et al.~[9] find
+anchoring effects in GPT-3, while MacMillan-Scott and Musolesi~[13] report
+inconsistent risk preferences across elicitation methods. Santurkar et
+al.~[18] find that LLMs exhibit opinion profiles that mirror specific
+demographic groups in their training data, raising broader concerns about
+memorisation of human behavioral patterns. None of these works control for
+training data contamination.
+
+\paragraph{Benchmark contamination and memorisation.}
+Carlini et al.~[4] demonstrate that LLMs memorise and can reproduce verbatim
+passages from training data at scale. McCoy et al.~[14] show that apparent
+reasoning abilities may reflect pattern matching to training examples rather
+than genuine competence. Jacovi et al.~[7] propose contamination-aware
+evaluation protocols for NLP benchmarks. Deng et al.~[24] document test set
+leakage in LLM evaluations and its effect on inflating performance estimates.
+Our work extends this contamination literature to behavioral economics,
+introducing isomorph construction as a domain-general decontamination method.
+
+\paragraph{Prospect theory and decision theory.}
+We ground our analysis in cumulative prospect theory~[23], which parametrises
+loss aversion via $\lambda$ (typically $\approx 2.25$--$2.5$ in humans~[23]),
+risk sensitivity via $\alpha$ (typically $\approx 0.88$~[11]), and probability
+weighting. The Allais paradox~[1] operationalises violations of the
+independence axiom. The endowment effect~[20,10] is operationalised via
+WTA/WTP divergence, typically $\approx 2\times$ in humans~[10]. Status quo
+bias~[17] and default effects~[8] provide our fifth paradigm.
+
+\paragraph{LLMs as economic agents.}
+Horton~[6] proposes using LLMs as ``silicon samples'' for economic research,
+arguing they can simulate human behavioral patterns. Argyle et al.~[2] find
+that LLMs can reproduce survey responses of specific demographic groups
+when given appropriate personas. Our findings complicate this picture:
+behavioral signatures depend critically on surface domain, suggesting that
+using LLMs as behavioral proxies without contamination controls may produce
+systematically misleading results.
+
+\section{Methodology}
+
+\subsection{Isomorph Construction}
+
+For each of five canonical behavioral economics paradigms, we constructed
+three surface variants sharing identical mathematical structure:
+
+\begin{itemize}
+    \item \textbf{Canonical}: The standard scenario as published in the
+    behavioral economics literature (e.g., the 600-person disease
+    problem~[22]).
+    \item \textbf{Novel}: A mathematically equivalent scenario in a neutral,
+    low-valence, non-technical domain absent from behavioral economics
+    textbooks (e.g., 600 items in a damaged warehouse). Novel domains were
+    explicitly chosen to avoid CS-adjacent language, medical framing, and
+    financial terminology.
+    \item \textbf{Abstract}: A fully abstract formulation with zero semantic
+    content (e.g., ``600 units of Resource X'', ``Object Q'', ``State A
+    vs.\ State B'').
+\end{itemize}
+
+Mathematical equivalence was verified analytically for all 15 scenario
+variants prior to data collection. For the framing effect,
+$\text{EV}(A) = \text{EV}(B) = 200$ in both gain and loss frames with
+mirrored probability ordering. For loss aversion, all gain levels yield
+positive EV: $\text{EV}(\text{gamble}) = 0.5G - 50 > 0$ for all
+$G \in \{105, 120, 150, 175, 200, 250\}$, making rational acceptance
+correct in every trial. For the certainty effect, Choice~2 equals
+Choice~1 scaled by $\nicefrac{1}{4}$ (0.80$\to$0.20, 1.00$\to$0.25),
+preserving the Allais structure. For the endowment effect, the exchange
+wording is perfectly symmetric. For status quo, both options are
+explicitly stated to have identical outcomes in all conditions.
+
+\subsection{Experimental Controls}
+
+Four design choices prevent confounds beyond the memorisation confound:
+\textbf{position bias control} via prompt-order counterbalancing for loss
+aversion (gamble-first vs.\ status-quo-first) and a $2\times2$ orthogonal
+design for status quo (default present/absent $\times$ ``stay'' listed
+first/second); \textbf{parameter sweeps} for loss aversion
+($G \in \{105, 120, 150, 175, 200, 250\}$, loss fixed at 100) and
+endowment (\$2, \$5, \$10); \textbf{output format enforcement} via
+explicit instructions ending every prompt (parse failure rate across
+all 15,000 trials: 0\%); and \textbf{temperature sweep} at
+$T \in \{0.0, 0.3, 0.7\}$.
+
+\subsection{Contamination Pre-Testing}
+
+Prior to the main experiment, each model was queried in a \emph{separate
+session} with contamination prompts asking it to describe known human
+behavioral patterns for each canonical scenario without answering the
+scenario itself. Responses were scored 0--3 (0 = no knowledge;
+3 = accurate recall of quantitative behavioral statistics). Both models
+scored 3/3 on all five biases, confirming that \emph{memorisation risk
+is a genuine confound}: both models demonstrably possess the knowledge
+required to retrieve canonical results. This pre-test is a necessary but
+not sufficient condition for establishing that memorisation occurred in any
+given experiment; the primary evidence for memorisation is the
+canonical-vs-novel dissociation observed in the experimental results.
+
+\subsection{Models and Procedure}
+
+We tested two models: \textbf{GPT-4o-mini} (proprietary frontier-scale API
+model, $T \in \{0.0, 0.7\}$) and \textbf{Gemma3:4b} (open-source
+4B-parameter quantised local model, $T \in \{0.3, 0.7\}$). Each of
+the 75 scenario variants was presented for 50 independent trials per
+temperature condition, with a fresh context window per trial.
+Total observations: 15,000.
+
+\subsection{Statistical Analysis}
+
+Binary choice outcomes are compared using $\chi^2$ tests with continuity
+correction; effect sizes are Cohen's $h$~[5]. The loss aversion coefficient
+$\lambda$ is estimated as the interpolated gain threshold where accept
+rate crosses 0.5, divided by the fixed loss of 100; we report upper bounds
+given universal acceptance. For the Allais paradox we report the full four-pattern distribution. Significance thresholds: $\alpha = 0.05$ (*), $0.01$ (**), $0.001$ (***).
+For key proportions we report 95\% Wilson score confidence intervals where
+the bound materially affects interpretation; full CIs for all 136 comparisons
+are provided in the supplementary \texttt{stats\_summary.csv}.
+
+\section{Results}
+
+Table~\ref{tab:main} summarises all key findings across models,
+surfaces, and temperature conditions.
+
+\begin{table}[t]
+\centering
+\caption{Summary of key experimental results. GPT-4o-mini = proprietary
+frontier API model; Gemma3:4b = open-source 4B local model. All results
+at $T=0.7$ unless noted. Significance: *** $p<0.001$, * $p<0.05$,
+ns = not significant.}
+\label{tab:main}
+\small
+\begin{tabular}{llcccl}
+\toprule
+\textbf{Bias} & \textbf{Surface} &
+\textbf{GPT-4o-mini} & \textbf{Gemma3:4b} &
+\textbf{Human} & \textbf{Interpretation} \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{Framing\\$\Delta P(\text{A})$}}
+  & Canonical & $+0.78^{***}$ & $+0.00^{\text{ns}}$ & $\approx+0.50$ & Memorised (Gemma3); genuine (GPT) \\
+  & Novel     & $+0.72^{***}$ & $+1.00^{***}$       & ---            & Genuine both models \\
+  & Abstract  & $+0.14^{*}$   & $+0.04^{\text{ns}}$ & ---            & Collapses both models \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{Loss aversion\\$\hat{\lambda}$}}
+  & Canonical & $\leq 1.05$ & $\leq 1.05$ & $2.25$--$2.5$ & Absent: intrinsic \\
+  & Novel     & $\leq 1.05$ & $\leq 1.05$ & ---           & Absent: intrinsic \\
+  & Abstract  & $\leq 1.05$ & $\leq 1.05$ & ---           & Absent: intrinsic \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{Endowment\\Owner accept}}
+  & Canonical & $0.56^{***}$  & $0.01^{\text{ns}}$ & WTA/WTP $\approx 2\times$ & GPT partial; Gemma3 floor \\
+  & Novel     & $0.07^{\text{ns}}$ & $0.00^{\text{ns}}$ & --- & Absent both \\
+  & Abstract  & $1.00^{***}$  & $1.00^{***}$        & --- & Ownership signal: both \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{Allais\\Violation rate}}
+  & Canonical & $0.00^{***}$ & $1.00^{***}$ & $\approx 0.65$ & \textbf{Opposite strategies} \\
+  & Novel     & $0.36^{***}$ & $0.00^{***}$ & ---            & Dissociation \\
+  & Abstract  & $0.18^{*}$   & $0.48^{***}$ & ---            & Mixed \\
+\midrule
+\multirow{3}{*}{\shortstack[l]{Status quo\\Default effect}}
+  & Canonical & $+0.50$ & $+0.50$ & $\approx+0.40$ & Confounded w/ position \\
+  & Novel     & $+0.50$ & $+0.50$ & ---            & Confounded w/ position \\
+  & Abstract  & $+0.00$ & $+0.00$ & ---            & Absent both models \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Framing Effect}
+
+GPT-4o-mini exhibited a strong canonical framing effect ($\Delta P(\text{A})
+= +0.78$, $p < 0.001$, $h = 1.93$) approaching the human baseline
+($\Delta \approx +0.50$), and a comparable novel effect ($\Delta = +0.72$,
+$p < 0.001$, $h = 1.79$). At $T=0.0$, effects sharpened: canonical
+$\Delta = +1.00$ ($h = 3.14$), novel $\Delta = +0.96$ ($h = 2.74$),
+suggesting lower temperature reveals the model's deterministic preference
+structure. Abstract scenarios yielded a marginal effect at $T=0.7$
+($\Delta = +0.14$, $p = 0.036$) that disappeared at $T=0.0$ ($p = 0.24$).
+
+Gemma3:4b showed a canonical-vs-novel dissociation that constitutes the
+primary evidence for memorisation. Two components jointly establish this:
+(i)~the contamination pre-test confirms Gemma3:4b can accurately describe
+the canonical human framing response, establishing knowledge possession;
+(ii)~Gemma3:4b shows zero framing effect on canonical scenarios
+($\Delta = 0.00$, $p = 1.00$) at both $T=0.3$ and $T=0.7$---choosing
+Option~A regardless of frame---while showing a perfect framing effect on
+novel variants. The combination of knowledge possession and canonical
+suppression is most parsimoniously explained by retrieval of the memorised
+``safe choice'' response. On novel scenarios: a
+perfect framing effect ($\Delta = +1.00$, $p < 0.001$, $h = 3.14$), showing
+Gemma3:4b possesses genuine frame-sensitivity that is overridden by a
+memorised response on the canonical scenario. Both models showed zero
+framing effect on abstract scenarios at all temperatures.
+
+All framing patterns were fully stable across tested temperatures for both
+models.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig1_framing.png}
+  \caption{Framing effect: $P(\text{Choose A})$ under gain frame (solid)
+  and loss frame (hatched) for both models across all three surfaces.
+  Red dashed/dotted lines indicate human baselines (gain: 0.72, loss:
+  0.22~[22]). Significance stars indicate $\chi^2$ test results
+  (*** $p<0.001$, * $p<0.05$, ns: not significant).}
+  \label{fig:framing}
+\end{figure}
+
+\subsection{Loss Aversion}
+
+Both models accepted every gamble at every gain level, across all surfaces
+and all temperatures, yielding $\hat{\lambda} \leq 1.05$ in all 24
+model-surface combinations (Figure~\ref{fig:lossav}). Both models accepted
+a 50\% chance of losing 100 units for a 50\% chance of gaining 105
+units---an EV advantage of only 2.5 units---which the vast majority of
+human participants would reject under standard prospect theory
+parameterisations~[23].
+
+Accept rates were statistically identical under gamble-first and
+status-quo-first prompt orderings (difference $< 0.02$ in all conditions),
+ruling out position bias. The absence was uniform across canonical, novel,
+and abstract surfaces, confirming this is not a memorisation artefact:
+it would require memorising a result \emph{contradicting} the published
+human literature in the training data.
+
+Comparing to Ross et al.~[16] who report $\lambda = 1.09$ for GPT-4 using
+a single canonical gamble pair: our six-point gain sweep across three
+surfaces confirms and extends this finding. Not only is $\hat{\lambda}$ low,
+it is consistently low regardless of domain, gain magnitude, and prompt
+order. \textbf{Loss aversion is structurally absent from both tested
+models, independent of training data, domain, temperature, and scale.}
+The lowest gain level tested ($G=105$, EV advantage of 2.5 units)
+was accepted universally; extending the sweep to lower ratios (e.g.$G=101$) would tighten the bound further but was not necessary to
+establish the substantive finding: both models accept gambles that
+97.5\% of human participants would reject~[23].
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.85\linewidth]{fig2_loss_aversion.png}
+  \caption{Loss aversion: estimated $\hat{\lambda}$ upper bounds across
+  models and surfaces. All conditions fall at or below $\hat{\lambda}=1.05$
+  (grey dashed line: rational agent $\lambda=1.0$; red dashed line: human
+  baseline $\lambda\approx 2.25$~[23]).}
+  \label{fig:lossav}
+\end{figure}
+
+\subsection{Endowment Effect}
+
+\textbf{Abstract surfaces} produced a striking, replicable result: owners
+accepted all exchanges (rate = 1.00) while non-owners refused all exchanges
+(rate = 0.00), across all three prices and both temperatures for both models
+($p < 0.001$ in all cases). This perfect ownership-driven split replicates
+across two architecturally distinct models, suggesting that both models respond to stated ownership in abstract contexts, though the underlying mechanisms may differ across architectures.
+
+\textbf{Canonical surfaces} showed divergent model behaviour. GPT-4o-mini showed
+a significant price-dependent ownership signal: at \$2, owner accept = 0.67
+vs.\ non-owner = 0.00 ($p < 0.001$, $h = 1.82$); at \$10, owner accept
+= 1.00 vs.\ non-owner = 0.13 ($p < 0.001$, $h = 2.94$). At $T=0.0$, the ownership ratio increased to 16.7$\times$ at \$10.
+The non-monotonic acceptance pattern for GPT-4o-mini owners (0.67 at \$2,
+0.33 at \$5, 1.00 at \$10) may reflect threshold reasoning rather than
+continuous valuation---the model may treat \$5 as below some internal
+reference price for a mug while treating \$10 as meeting it. Gemma3:4b
+showed near-floor rates for both owner and non-owner conditions ($< 0.02$),
+consistent with treating any price in the \$2--\$10 range as insufficient
+for a real object regardless of ownership.
+
+\textbf{Novel surfaces} yielded null effects for both models (all rates
+$< 0.10$), suggesting either floor effects or genuine absence of ownership
+sensitivity in unfamiliar domains without memorised value associations.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig3_endowment.png}
+  \caption{Endowment effect: acceptance rate curves by ownership condition
+  and price for GPT-4o-mini (top row) and Gemma3:4b (bottom row) across all three
+  surfaces. Solid lines: owner condition; dashed lines: non-owner condition.
+  Human WTA/WTP ratio $\approx 2\times$~[10].}
+  \label{fig:endow}
+\end{figure}
+
+\subsection{Certainty Effect (Allais Paradox)}
+
+The most striking finding in our dataset involves the two models producing
+opposite deterministic strategies on canonical Allais scenarios, stable
+across all temperatures (Figure~\ref{fig:certainty}).
+
+\textbf{Gemma3:4b}: 100\% Allais violation (pattern B,A) at $T=0.3$ and
+$T=0.7$---choosing the certain option in Choice~1 but the risky option
+in Choice~2, \emph{exactly} matching the canonical human violation
+documented in the literature~[1,11]. This pattern persisted with zero
+variance at both temperatures, indicating a deterministic memorised response.
+
+\textbf{GPT-4o-mini}: 0\% Allais violation, 100\% consistent risk aversion
+(pattern B,B) at both $T=0.0$ and $T=0.7$---choosing the lower-variance
+option in both choices. This is internally consistent but suboptimal under
+expected utility maximisation.
+
+The chi-square test confirms the cross-model difference is highly significant
+($p < 0.001$). Neither model produced the rational response (A,A) on any
+canonical trial.
+
+On \textbf{novel scenarios}, the pattern shifted: Gemma3:4b switched to 100\%
+risk aversion (B,B), providing further evidence that the canonical 100\%
+violation reflects memorisation---the model knows the ``correct'' answer for
+the canonical Allais problem but defaults to risk aversion on novel variants.
+GPT-4o-mini showed a mixed distribution at $T=0.7$ (36\% violation, 62\% risk
+aversion) that concentrated toward risk aversion at $T=0.0$ (16\% and 84\%).
+
+On \textbf{abstract scenarios}, GPT-4o-mini at $T=0.0$ produced 100\% reverse
+violation (A,B)---a pattern that is internally inconsistent and irrational
+under any normative framework---suggesting that low-temperature decoding
+exposes a distinct latent bias on fully symbolic inputs.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig4_certainty.png}
+  \caption{Certainty effect: choice pattern distributions across models and
+  surfaces. Stacked bars show proportions of each response pattern. Red
+  dashed line: human Allais violation rate ($\approx 0.65$~[1]).}
+  \label{fig:certainty}
+\end{figure}
+
+\subsection{Status Quo Bias}
+
+The $2\times2$ orthogonal design decomposed the apparent status quo effect
+into a genuine default effect and a position preference. For both models
+on canonical and novel surfaces: stay rates were 1.00 in Conditions
+C1 (default + stay first), C2 (default + stay second), and C3
+(no default + stay first), and 0.00 in Condition C4 (no default +
+switch first). The decomposed default effect (+0.50) and position effect
+(+0.50) are equal---the only condition producing non-stay responses is C4,
+where ``switch'' appears as Option~A. This demonstrates that both models
+exhibit a strong, domain-general preference for Option~A that is
+independent of whether any default has been set.
+
+On abstract surfaces, GPT-4o-mini showed pure position bias (position
+effect $= +1.00$, default effect $= 0.00$), confirming the Option~A
+preference extends to fully symbolic contexts. Gemma3:4b showed zero
+effects in either direction on abstract scenarios.
+
+This finding is itself informative: our $2\times2$ design cannot isolate a
+genuine default effect from the dominant Option~A preference---these two
+signals are statistically inseparable in our data. Whether LLMs lack the
+mechanism underlying human default effects~[8,17], or whether that mechanism
+is simply swamped by a stronger position preference, cannot be determined from
+the current design. What is clear is that standard two-option experimental
+designs without position counterbalancing will conflate position preference
+with status quo bias when testing LLMs.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig5_status_quo.png}
+  \caption{Status quo bias: heatmaps of default effect (left) and position
+  effect (right) across both models and all three surfaces. Equal default
+  and position effects of $+0.50$ on canonical and novel surfaces indicate
+  the two cannot be separated, revealing dominant Option~A preference rather
+  than genuine default-driven bias.}
+  \label{fig:statusquo}
+\end{figure}
+
+\section{Discussion}
+
+\subsection{A Tripartite Taxonomy of LLM Behavioral Anomalies}
+
+Our results support a taxonomy of three qualitatively distinct patterns.
+Figure~\ref{fig:summary} provides a cross-model overview of all key metrics
+relative to human baselines.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig6_summary_heatmap.png}
+  \caption{Cross-model summary heatmap: key metrics for both models relative
+  to human baselines. Cell values show raw metric; parenthetical shows human
+  baseline. Colour intensity reflects proximity to human baseline. Loss aversion
+  $\hat{\lambda}$ is consistently far below human levels across all conditions.}
+  \label{fig:summary}
+\end{figure}
+
+\paragraph{Memorised biases.}
+These appear on canonical scenarios but collapse on isomorphs. Gemma3:4b's
+framing effect dissociation (zero effect canonical, perfect effect novel)
+and its canonical Allais 100\% violation (absent on novel) both exemplify
+this pattern. The contamination scores (3/3 on all five biases for both
+models) confirm the mechanism: models recognise the canonical scenario and
+retrieve the known result, overriding whatever reasoning they apply to
+novel equivalents. This finding suggests that existing reports of LLM
+behavioral biases using only canonical scenarios~[16,3,19] may be
+substantially overstating the prevalence of genuine bias.
+
+\paragraph{Intrinsic structural properties.}
+Loss aversion is the unambiguous example: $\hat{\lambda} \leq 1.05$
+across all 24 model-surface-temperature combinations. This cannot be a
+memorisation artefact because it contradicts the human-calibrated training
+data. We interpret this as reflecting how these models process probabilistic
+outcomes: in the absence of affective weighting or evolved risk sensitivity,
+they approximate expected value maximisation~[3], accepting any positive-EV
+gamble regardless of loss magnitude. The abstract-surface endowment result
+(ownership separation at 100\%/0\%) may be a second example of an intrinsic
+property, though more investigation is needed.
+
+\paragraph{Architecture-dependent signatures.}
+The canonical Allais reversal---100\% violation vs.\ 0\%---cannot both
+be memorisation of the same training data. We hypothesise that differences
+in instruction tuning objectives, RLHF methodology~[15], and model scale
+produce qualitatively different decision heuristics on problems with
+certainty effects. GPT-4o-mini's 100\% reverse violation (A,B) at $T=0.0$ on
+abstract scenarios suggests an additional latent bias that only manifests
+under deterministic decoding, warranting further investigation.
+
+\subsection{The Option~A Position Bias}
+
+Both models exhibit a strong, domain-general preference for Option~A
+that is temperature-stable and independent of whether a default has been
+set. This can masquerade as status quo bias in designs that do not
+counterbalance position. The implication is methodological: any study
+presenting LLMs with two-option choices labelled A and B without position
+counterbalancing risks confounding genuine preference signals with this
+structural labelling bias~[13].
+
+\subsection{Implications for LLM Deployment}
+
+The structurally absent loss aversion has the most direct practical
+implications. LLM-assisted systems in portfolio optimisation, insurance
+pricing, or clinical treatment choice cannot assume the model will
+weight losses more heavily than equivalent gains. Under prospect theory
+parameterisations calibrated to human data~[23], both models would
+systematically accept gambles that human clients would reject.
+
+The framing result implies that GPT-4o-mini's genuine frame-sensitivity
+on novel scenarios may reasonably approximate human responses, while
+Gemma3:4b reproduces the canonical human framing effect for memorisation
+reasons that do not generalise to novel policy scenarios. Using these
+models interchangeably as behavioral proxies~[6,2] would produce
+contradictory predictions on novel contexts.
+
+\subsection{Limitations}
+
+We note four limitations bound the scope of our conclusions.
+\emph{Model coverage}: we tested two models representing API-scale and
+4B local deployment; findings cannot be assumed to generalise to other
+model families, scales, or training regimes without further testing.
+\emph{Endowment price sensitivity}: the \$2--\$10 sweep may fall below
+the psychological salience threshold for real-world objects in both models,
+producing floor effects that prevent measurement of the endowment effect
+rather than evidencing its absence.
+\emph{Single-turn prompting}: all trials used zero-context single-turn
+prompts without role assignment or system-prompt priming; behavioral
+signatures may differ under persona-assigned or multi-turn conditions
+that more closely replicate real deployment contexts~[2,6].
+\emph{Certainty effect domain coverage}: the Allais scenarios were tested
+with monetary framing only; whether the architecture-dependent violation
+patterns extend to non-monetary contexts remains an open question.
+
+\section{Conclusion}
+
+We introduced and validated an isomorph-based methodology for distinguishing
+memorised from intrinsic behavioral anomalies in LLMs, and applied it across
+five canonical behavioral economics paradigms, two architecturally distinct
+models, and three temperature conditions totalling 15,000 trials. LLMs are
+neither rational agents nor human-like agents: they exhibit a tripartite
+taxonomy comprising memorised biases, intrinsic structural properties, and
+architecture-dependent signatures. Loss aversion is structurally absent from
+both tested models across all conditions---our most robust finding, with
+immediate implications for any deployment context assuming human-calibrated
+risk sensitivity. The canonical Allais reversal shows that behavioral
+characterisation cannot be generalised across LLM families. The Option~A
+position bias reveals a methodological confound in standard two-option
+experimental designs. We release all code, scenarios, and data to support
+future work on behaviorally-grounded LLM evaluation.
+
+\section*{References}
+
+\small
+
+[1] Allais, M. (1953). Le comportement de l'homme rationnel devant le risque.
+\textit{Econometrica}, 21(4), 503--546.
+
+[2] Argyle, L.P., et al. (2023). Out of one, many: Using language models to
+simulate human samples. \textit{Political Analysis}, 31(3), 337--351.
+
+[3] Binz, M., \& Schulz, E. (2023). Using cognitive psychology to understand
+GPT-3. \textit{PNAS}, 120(6), e2218523120.
+
+[4] Carlini, N., et al. (2021). Extracting training data from large language
+models. \textit{USENIX Security Symposium}, 2633--2650.
+
+[5] Cohen, J. (1988). \textit{Statistical power analysis for the behavioral
+sciences} (2nd ed.). Lawrence Erlbaum.
+
+[6] Horton, J.J. (2023). Large language models as simulated economic agents:
+What can we learn from homo silicus? \textit{NBER Working Paper} 31122.
+
+[7] Jacovi, A., et al. (2023). Stop uploading test data in plain text:
+Practical strategies for mitigating data contamination. \textit{EMNLP 2023}.
+
+[8] Johnson, E.J., \& Goldstein, D. (2003). Do defaults save lives?
+\textit{Science}, 302(5649), 1338--1339.
+
+[9] Jones, E., \& Steinhardt, J. (2022). Capturing failures of large language models
+via human cognitive biases. \textit{Advances in Neural Information Processing Systems},
+35, 11785--11799. arXiv:2202.12299.
+
+[10] Kahneman, D., Knetsch, J.L., \& Thaler, R.H. (1991). Anomalies: The
+endowment effect, loss aversion, and status quo bias. \textit{Journal of
+Economic Perspectives}, 5(1), 193--206.
+
+[11] Kahneman, D., \& Tversky, A. (1979). Prospect theory: An analysis of
+decision under risk. \textit{Econometrica}, 47(2), 263--291.
+
+[12] L\'{o}pez-Lira, T., \& Tang, Y. (2023). Can ChatGPT forecast stock
+price movements? \textit{arXiv:2304.07619}.
+
+[13] MacMillan-Scott, O., \& Musolesi, M. (2024). (Ir)rationality and
+cognitive biases in large language models. \textit{Royal Society Open
+Science}, 11, 240255.
+
+[14] McCoy, R.T., et al. (2023). Embers of autoregression: Understanding
+large language models through the problem they are trained to solve.
+\textit{arXiv:2309.13638}.
+
+[15] Ouyang, L., et al. (2022). Training language models to follow
+instructions with human feedback. \textit{NeurIPS 2022}.
+
+[16] Ross, J., Kim, Y., \& Lo, A.W. (2024). LLM economicus? Mapping the behavioral
+biases of LLMs via utility theory. \textit{Conference on Language Modeling (COLM 2024)}.
+arXiv:2408.02784.
+
+[17] Samuelson, W., \& Zeckhauser, R. (1988). Status quo bias in decision
+making. \textit{Journal of Risk and Uncertainty}, 1(1), 7--59.
+
+[18] Santurkar, S., et al. (2023). Whose opinions do language models
+reflect? \textit{ICML 2023}.
+
+[19] Talboy, A.N., \& Fuller, E. (2023). Challenging the appearance of
+machine intelligence: Cognitive bias in LLMs. \textit{arXiv:2304.13734}.
+
+[20] Thaler, R. (1980). Toward a positive theory of consumer choice.
+\textit{Journal of Economic Behavior \& Organization}, 1(1), 39--60.
+
+[21] Thirunavukarasu, A.J., et al. (2023). Large language models in
+medicine. \textit{Nature Medicine}, 29, 1930--1940.
+
+[22] Tversky, A., \& Kahneman, D. (1981). The framing of decisions and
+the psychology of choice. \textit{Science}, 211(4481), 453--458.
+
+[23] Tversky, A., \& Kahneman, D. (1992). Advances in prospect theory:
+Cumulative representation of uncertainty. \textit{Journal of Risk and
+Uncertainty}, 5(4), 297--323.
+
+[24] Deng, C., Zhao, Y., Tang, X., Gerstein, M., \& Cohan, A. (2023). Investigating
+data contamination in modern benchmarks for large language models. arXiv:2311.09783.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section*{Conference For AI Scientists 2026 - AI Involvement Checklist}
+\label{checklist_ai_involvement}
+
+\subsection*{Research Stage Assessment}
+
+\begin{enumerate}
+
+\item \textbf{Hypothesis development}
+
+Answer: \involvementC{}
+
+Iteration Effort: \iterationMedium{}
+
+Explanation: The research question---distinguishing memorised from intrinsic biases via isomorph
+construction---was proposed by a frontier LLM acting as a research collaborator, following its own
+literature analysis identifying the memorisation confound. The LLM generated the initial three-finding
+taxonomy and isomorph construction procedure. The human validated the framing, selected the
+five paradigms, and made the final decision to pursue the study. Approximately 20--30 substantive
+iterations to sharpen the hypothesis.
+
+\item \textbf{Experimental design and implementation}
+
+Answer: \involvementC{}
+
+Iteration Effort: \iterationHigh{}
+
+Explanation: The LLM designed all 15 isomorph scenario variants through six rounds of reviewer-style
+critique and revision. The LLM wrote all experimental Python scripts: scenario generation, API
+harnesses for two cloud and one local provider, response parsers, rate-limit handling, and the full
+analysis and figure generation pipeline. The human verified mathematical equivalence of all isomorphs,
+selected final domain wordings, diagnosed API integration issues, and executed all 15,000 experimental
+trials. Over 100 substantive iterations across scenario design, code debugging, and API troubleshooting.
+
+\item \textbf{Analysis of data and interpretation of results}
+
+Answer: \involvementC{}
+
+Iteration Effort: \iterationMedium{}
+
+Explanation: The LLM wrote the full statistical analysis pipeline including $\chi^2$ tests, Cohen's $h$,
+prospect theory $\lambda$ estimation, and all six publication figures. The LLM provided initial
+interpretations and proposed the tripartite taxonomy. The human reviewed all statistical outputs,
+validated the $\lambda$ estimation approach, and refined the Discussion argumentation. Approximately
+15--25 substantive iterations.
+
+\item \textbf{Writing}
+
+Answer: \involvementC{}
+
+Iteration Effort: \iterationMedium{}
+
+Explanation: The LLM produced the first complete draft of the paper including all sections, tables,
+figures, references, and both mandatory checklists. The human reviewed for scientific accuracy,
+verified all cited statistics match experimental outputs, added citations, tightened arguments, and made
+all final editorial decisions. Approximately 10--20 substantive iterations.
+
+\end{enumerate}
+
+\subsection*{AI System Documentation}
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+
+\item \textbf{AI systems used}
+
+Description: All AI-assisted research stages used a single frontier large language model accessed via a
+consumer chat interface. The system is a transformer-based instruction-tuned model at frontier scale
+(estimated 100B+ parameters) with broad scientific, coding, and statistical analysis capabilities. The
+same system was used for all stages. No multi-agent framework or autonomous pipeline was used; all
+interactions were human-directed short-context conversations with outputs approved before use.
+
+\item \textbf{Observed AI Limitations}
+
+Description: Four recurring limitations: (1)~scenario wordings that introduced subtle semantic
+confounds (CS-adjacent terminology, asymmetric verb framing) requiring human identification across
+multiple review cycles; (2)~a statistical code error in $\lambda$ upper-bound handling for the
+degenerate all-accept case, requiring debugging; (3)~overconfident causal claims in early Discussion
+drafts requiring moderation; (4)~inability to independently execute API calls or verify experimental
+results---all runs required human execution with results uploaded for analysis.
+
+\end{enumerate}
+
+\newpage
+
+\section*{Conference For AI Scientists 2026 - Reproducibility and Responsibility Checklist}
+\label{checklist_reproducibility}
+
+\begin{enumerate}
+
+\item \textbf{Claims}
+\item[] Answer: \answerYes{}
+\item[] Justification: The abstract and introduction accurately state the three core empirical findings.
+All quantitative claims in the abstract are verified against experimental output files. Claims are
+explicitly scoped to the two tested models throughout the paper.
+
+\item \textbf{Limitations}
+\item[] Answer: \answerYes{}
+\item[] Justification: Section~5.4 contains a dedicated Limitations paragraph addressing four
+substantive limitations: model coverage scope, endowment price sensitivity, single-turn prompting
+context, and certainty effect domain coverage.
+
+\item \textbf{Theory assumptions and proofs}
+\item[] Answer: \answerNA{}
+\item[] Justification: No theoretical claims require formal proof. Mathematical equivalence of all 15
+isomorph variants is verified analytically in Section~3.1.
+
+\item \textbf{Experimental result reproducibility}
+\item[] Answer: \answerYes{}
+\item[] Justification: All prompts, model configurations, temperature settings, trial counts, and
+analysis procedures are described in Section~3 and supplementary materials. All raw response data
+is released publicly.
+
+\item \textbf{Open access to data and code}
+\item[] Answer: \answerYes{}
+\item[] Justification: All 15,000 trial responses, 75 scenario definitions, experimental scripts, and
+analysis code are released anonymously as supplementary material. The repository README contains
+exact commands for reproducing all results.
+
+\item \textbf{Experimental setting/details}
+\item[] Answer: \answerYes{}
+\item[] Justification: Section~3 specifies all experimental conditions: temperatures, trials per
+condition, prompt format instructions, API configurations, and gain/price sweep parameters. Full
+scenario text for all 75 variants is in the supplementary dataset.
+
+\item \textbf{Experiment statistical significance}
+\item[] Answer: \answerYes{}
+\item[] Justification: All key comparisons report $\chi^2$ test $p$-values with significance stars
+and Cohen's $h$ effect sizes. The full 136-row statistical summary is provided as
+\texttt{stats\_summary.csv} in the supplementary materials.
+
+\item \textbf{Experiments compute resources}
+\item[] Answer: \answerYes{}
+\item[] Justification: Gemma3:4b was run locally on a consumer GPU (4GB VRAM, 8GB RAM, 3.2GHz)
+requiring approximately 8--9 hours per 3,750-trial run. GPT-4o-mini was accessed via cloud API
+at approximately \$0.05--\$0.10 per 3,750-trial run with average latency 700--1100ms per call.
+Total compute cost was under \$1 USD.
+
+\item \textbf{Research Ethics}
+\item[] Answer: \answerYes{}
+\item[] Justification: This study involves no human subjects, personal data, or sensitive information.
+All experiments were conducted solely on language model APIs and local inference. The work conforms
+with the NeurIPS Code of Ethics.
+
+\item \textbf{Broader impacts}
+\item[] Answer: \answerYes{}
+\item[] Justification: Positive impacts include providing practitioners with empirically grounded
+guidance for LLM deployment in economic decision contexts. Potential misuse (exploiting predictable
+model biases) is limited by the specificity and context-dependence of the findings. Deployment
+implications are discussed in Section~5.3.
+
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,137 @@
+bias,model,surface,metric,value,p_value,cohens_h,sig,note
+framing,GPT-4o-mini T=0.7,canonical,delta_P(A),0.78,0.0,1.9305,***,gain=0.98 loss=0.20
+framing,GPT-4o-mini T=0.7,novel,delta_P(A),0.72,0.0,1.7877,***,gain=0.74 loss=0.02
+framing,GPT-4o-mini T=0.7,abstract,delta_P(A),0.14,0.036032,0.5392,*,gain=0.98 loss=0.84
+framing,GPT-4o-mini T=0.0,canonical,delta_P(A),1.0,0.0,3.1416,***,gain=1.00 loss=0.00
+framing,GPT-4o-mini T=0.0,novel,delta_P(A),0.96,0.0,2.7389,***,gain=0.96 loss=0.00
+framing,GPT-4o-mini T=0.0,abstract,delta_P(A),0.06,0.241028,0.4949,ns,gain=1.00 loss=0.94
+framing,Gemma3:4b T=0.7,canonical,delta_P(A),0.0,1.0,0.0,ns,gain=1.00 loss=1.00
+framing,Gemma3:4b T=0.7,novel,delta_P(A),1.0,0.0,3.1416,***,gain=1.00 loss=0.00
+framing,Gemma3:4b T=0.7,abstract,delta_P(A),0.04,0.475051,0.4027,ns,gain=1.00 loss=0.96
+framing,Gemma3:4b T=0.3,canonical,delta_P(A),0.0,1.0,0.0,ns,gain=1.00 loss=1.00
+framing,Gemma3:4b T=0.3,novel,delta_P(A),1.0,0.0,3.1416,***,gain=1.00 loss=0.00
+framing,Gemma3:4b T=0.3,abstract,delta_P(A),0.0,1.0,0.0,ns,gain=1.00 loss=1.00
+loss_aversion,GPT-4o-mini T=0.7,canonical,lambda_upper_bound,1.05,,,,"all_accept=0.990 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.7,novel,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.7,abstract,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.7,pooled,position_bias,-0.0067,,,,gamble_first=0.993 sq_first=1.000
+loss_aversion,GPT-4o-mini T=0.0,canonical,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.0,novel,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.0,abstract,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,GPT-4o-mini T=0.0,pooled,position_bias,0.0,,,,gamble_first=1.000 sq_first=1.000
+loss_aversion,Gemma3:4b T=0.7,canonical,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.7,novel,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.7,abstract,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.7,pooled,position_bias,0.0,,,,gamble_first=1.000 sq_first=1.000
+loss_aversion,Gemma3:4b T=0.3,canonical,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.3,novel,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.3,abstract,lambda_upper_bound,1.05,,,,"all_accept=1.000 (all accepted, lambda<=1.05)"
+loss_aversion,Gemma3:4b T=0.3,pooled,position_bias,0.0,,,,gamble_first=1.000 sq_first=1.000
+endowment,GPT-4o-mini T=0.7,canonical,owner_accept_$2,0.68,,,,
+endowment,GPT-4o-mini T=0.7,canonical,nonowner_accept_$2,0.0,0.0,1.939,***,ratio=infx
+endowment,GPT-4o-mini T=0.7,canonical,owner_accept_$5,0.0,,,,
+endowment,GPT-4o-mini T=0.7,canonical,nonowner_accept_$5,0.02,1.0,-0.2837,ns,ratio=0.0x
+endowment,GPT-4o-mini T=0.7,canonical,owner_accept_$10,1.0,,,,
+endowment,GPT-4o-mini T=0.7,canonical,nonowner_accept_$10,0.16,0.0,nan,***,ratio=6.2x
+endowment,GPT-4o-mini T=0.7,novel,owner_accept_$2,0.0,,,,
+endowment,GPT-4o-mini T=0.7,novel,nonowner_accept_$2,0.02,1.0,-0.2837,ns,ratio=0.0x
+endowment,GPT-4o-mini T=0.7,novel,owner_accept_$5,0.0,,,,
+endowment,GPT-4o-mini T=0.7,novel,nonowner_accept_$5,0.2,0.0027,-0.9272,**,ratio=0.0x
+endowment,GPT-4o-mini T=0.7,novel,owner_accept_$10,0.22,,,,
+endowment,GPT-4o-mini T=0.7,novel,nonowner_accept_$10,0.0,0.001393,0.9763,**,ratio=infx
+endowment,GPT-4o-mini T=0.7,abstract,owner_accept_$2,1.0,,,,
+endowment,GPT-4o-mini T=0.7,abstract,nonowner_accept_$2,0.0,0.0,nan,***,ratio=infx
+endowment,GPT-4o-mini T=0.7,abstract,owner_accept_$5,1.0,,,,
+endowment,GPT-4o-mini T=0.7,abstract,nonowner_accept_$5,0.0,0.0,nan,***,ratio=infx
+endowment,GPT-4o-mini T=0.7,abstract,owner_accept_$10,1.0,,,,
+endowment,GPT-4o-mini T=0.7,abstract,nonowner_accept_$10,0.0,0.0,nan,***,ratio=infx
+endowment,GPT-4o-mini T=0.0,canonical,owner_accept_$2,0.0,,,,
+endowment,GPT-4o-mini T=0.0,canonical,nonowner_accept_$2,0.0,1.0,0.0,ns,ratio=infx
+endowment,GPT-4o-mini T=0.0,canonical,owner_accept_$5,0.0,,,,
+endowment,GPT-4o-mini T=0.0,canonical,nonowner_accept_$5,0.02,1.0,-0.2837,ns,ratio=0.0x
+endowment,GPT-4o-mini T=0.0,canonical,owner_accept_$10,1.0,,,,
+endowment,GPT-4o-mini T=0.0,canonical,nonowner_accept_$10,0.04,0.0,nan,***,ratio=25.0x
+endowment,GPT-4o-mini T=0.0,novel,owner_accept_$2,0.0,,,,
+endowment,GPT-4o-mini T=0.0,novel,nonowner_accept_$2,0.0,1.0,0.0,ns,ratio=infx
+endowment,GPT-4o-mini T=0.0,novel,owner_accept_$5,0.0,,,,
+endowment,GPT-4o-mini T=0.0,novel,nonowner_accept_$5,0.0,1.0,0.0,ns,ratio=infx
+endowment,GPT-4o-mini T=0.0,novel,owner_accept_$10,0.02,,,,
+endowment,GPT-4o-mini T=0.0,novel,nonowner_accept_$10,0.0,1.0,0.2837,ns,ratio=infx
+endowment,GPT-4o-mini T=0.0,abstract,owner_accept_$2,1.0,,,,
+endowment,GPT-4o-mini T=0.0,abstract,nonowner_accept_$2,0.0,0.0,nan,***,ratio=infx
+endowment,GPT-4o-mini T=0.0,abstract,owner_accept_$5,1.0,,,,
+endowment,GPT-4o-mini T=0.0,abstract,nonowner_accept_$5,0.0,0.0,nan,***,ratio=infx
+endowment,GPT-4o-mini T=0.0,abstract,owner_accept_$10,1.0,,,,
+endowment,GPT-4o-mini T=0.0,abstract,nonowner_accept_$10,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.7,canonical,owner_accept_$2,0.02,,,,
+endowment,Gemma3:4b T=0.7,canonical,nonowner_accept_$2,0.0,1.0,0.2837,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,canonical,owner_accept_$5,0.0,,,,
+endowment,Gemma3:4b T=0.7,canonical,nonowner_accept_$5,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,canonical,owner_accept_$10,0.0,,,,
+endowment,Gemma3:4b T=0.7,canonical,nonowner_accept_$10,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,novel,owner_accept_$2,0.0,,,,
+endowment,Gemma3:4b T=0.7,novel,nonowner_accept_$2,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,novel,owner_accept_$5,0.0,,,,
+endowment,Gemma3:4b T=0.7,novel,nonowner_accept_$5,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,novel,owner_accept_$10,0.0,,,,
+endowment,Gemma3:4b T=0.7,novel,nonowner_accept_$10,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.7,abstract,owner_accept_$2,1.0,,,,
+endowment,Gemma3:4b T=0.7,abstract,nonowner_accept_$2,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.7,abstract,owner_accept_$5,1.0,,,,
+endowment,Gemma3:4b T=0.7,abstract,nonowner_accept_$5,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.7,abstract,owner_accept_$10,1.0,,,,
+endowment,Gemma3:4b T=0.7,abstract,nonowner_accept_$10,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.3,canonical,owner_accept_$2,0.0,,,,
+endowment,Gemma3:4b T=0.3,canonical,nonowner_accept_$2,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,canonical,owner_accept_$5,0.0,,,,
+endowment,Gemma3:4b T=0.3,canonical,nonowner_accept_$5,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,canonical,owner_accept_$10,0.0,,,,
+endowment,Gemma3:4b T=0.3,canonical,nonowner_accept_$10,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,novel,owner_accept_$2,0.0,,,,
+endowment,Gemma3:4b T=0.3,novel,nonowner_accept_$2,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,novel,owner_accept_$5,0.0,,,,
+endowment,Gemma3:4b T=0.3,novel,nonowner_accept_$5,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,novel,owner_accept_$10,0.0,,,,
+endowment,Gemma3:4b T=0.3,novel,nonowner_accept_$10,0.0,1.0,0.0,ns,ratio=infx
+endowment,Gemma3:4b T=0.3,abstract,owner_accept_$2,1.0,,,,
+endowment,Gemma3:4b T=0.3,abstract,nonowner_accept_$2,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.3,abstract,owner_accept_$5,1.0,,,,
+endowment,Gemma3:4b T=0.3,abstract,nonowner_accept_$5,0.0,0.0,nan,***,ratio=infx
+endowment,Gemma3:4b T=0.3,abstract,owner_accept_$10,1.0,,,,
+endowment,Gemma3:4b T=0.3,abstract,nonowner_accept_$10,0.0,0.0,nan,***,ratio=infx
+certainty_effect,GPT-4o-mini T=0.7,canonical,violation_rate,0.0,0.0,-1.8754,***,vs human 0.65
+certainty_effect,GPT-4o-mini T=0.7,novel,violation_rate,0.36,0.00663,-0.5885,**,vs human 0.65
+certainty_effect,GPT-4o-mini T=0.7,abstract,violation_rate,0.18,5e-06,-0.9992,***,vs human 0.65
+certainty_effect,GPT-4o-mini T=0.0,canonical,violation_rate,0.0,0.0,-1.8754,***,vs human 0.65
+certainty_effect,GPT-4o-mini T=0.0,novel,violation_rate,0.16,2e-06,-1.0525,***,vs human 0.65
+certainty_effect,GPT-4o-mini T=0.0,abstract,violation_rate,0.0,0.0,-1.8754,***,vs human 0.65
+certainty_effect,Gemma3:4b T=0.7,canonical,violation_rate,1.0,1.6e-05,nan,***,vs human 0.65
+certainty_effect,Gemma3:4b T=0.7,novel,violation_rate,0.0,0.0,-1.8754,***,vs human 0.65
+certainty_effect,Gemma3:4b T=0.7,abstract,violation_rate,0.48,0.125001,-0.3447,ns,vs human 0.65
+certainty_effect,Gemma3:4b T=0.3,canonical,violation_rate,1.0,1.6e-05,nan,***,vs human 0.65
+certainty_effect,Gemma3:4b T=0.3,novel,violation_rate,0.0,0.0,-1.8754,***,vs human 0.65
+certainty_effect,Gemma3:4b T=0.3,abstract,violation_rate,0.46,0.083535,-0.3848,ns,vs human 0.65
+status_quo,GPT-4o-mini T=0.7,canonical,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.7,canonical,position_effect,0.5,,,,
+status_quo,GPT-4o-mini T=0.7,novel,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.7,novel,position_effect,0.5,,,,
+status_quo,GPT-4o-mini T=0.7,abstract,default_effect,0.0,,,,C1=1.00 C2=0.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.7,abstract,position_effect,1.0,,,,
+status_quo,GPT-4o-mini T=0.0,canonical,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.0,canonical,position_effect,0.5,,,,
+status_quo,GPT-4o-mini T=0.0,novel,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.0,novel,position_effect,0.5,,,,
+status_quo,GPT-4o-mini T=0.0,abstract,default_effect,0.0,,,,C1=1.00 C2=0.00 C3=1.00 C4=0.00
+status_quo,GPT-4o-mini T=0.0,abstract,position_effect,1.0,,,,
+status_quo,Gemma3:4b T=0.7,canonical,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,Gemma3:4b T=0.7,canonical,position_effect,0.5,,,,
+status_quo,Gemma3:4b T=0.7,novel,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,Gemma3:4b T=0.7,novel,position_effect,0.5,,,,
+status_quo,Gemma3:4b T=0.7,abstract,default_effect,0.0,,,,C1=1.00 C2=1.00 C3=1.00 C4=1.00
+status_quo,Gemma3:4b T=0.7,abstract,position_effect,0.0,,,,
+status_quo,Gemma3:4b T=0.3,canonical,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,Gemma3:4b T=0.3,canonical,position_effect,0.5,,,,
+status_quo,Gemma3:4b T=0.3,novel,default_effect,0.5,,,,C1=1.00 C2=1.00 C3=1.00 C4=0.00
+status_quo,Gemma3:4b T=0.3,novel,position_effect,0.5,,,,
+status_quo,Gemma3:4b T=0.3,abstract,default_effect,0.0,,,,C1=1.00 C2=1.00 C3=1.00 C4=1.00
+status_quo,Gemma3:4b T=0.3,abstract,position_effect,0.0,,,,

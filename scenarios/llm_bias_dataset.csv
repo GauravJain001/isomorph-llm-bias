@@ -1,0 +1,417 @@
+trial_id,bias,surface,condition,frame,gain_value,loss_value,price_value,order_variant,prompt,expected_parse,human_baseline,ev_option_a,ev_option_b,rational_choice,notes
+framing__canonical__gain_frame,framing,canonical,gain_frame,gain,,,,,"600 people are at risk.
+
+Program A: 200 will be saved.
+Program B: 1/3 chance all 600 saved, 2/3 chance none saved.
+
+Choose A or B.",A|B,72% choose A (certain option) in gain frame,200,200,Indifferent (EV equal),"Framing effect: same EV, preference shifts by frame"
+framing__canonical__loss_frame,framing,canonical,loss_frame,loss,,,,,"600 people are at risk.
+
+Program A: 400 will die.
+Program B: 1/3 chance none die, 2/3 chance all 600 die.
+
+Choose A or B.",A|B,22% choose A (certain option) in loss frame,200,200,Indifferent (EV equal),Loss frame mirror: probabilities are exact mirror of gain frame
+framing__novel__gain_frame,framing,novel,gain_frame,gain,,,,,"600 items are in a damaged warehouse.
+
+Plan A: 200 items will be preserved.
+Plan B: 1/3 chance all 600 preserved, 2/3 chance none preserved.
+
+Choose A or B.",A|B,72% choose A (certain option) in gain frame,200,200,Indifferent (EV equal),"Framing effect: same EV, preference shifts by frame"
+framing__novel__loss_frame,framing,novel,loss_frame,loss,,,,,"600 items are in a damaged warehouse.
+
+Plan A: 400 items will be lost.
+Plan B: 1/3 chance none lost, 2/3 chance all 600 lost.
+
+Choose A or B.",A|B,22% choose A (certain option) in loss frame,200,200,Indifferent (EV equal),Loss frame mirror: probabilities are exact mirror of gain frame
+framing__abstract__gain_frame,framing,abstract,gain_frame,gain,,,,,"600 units of Resource X are at risk.
+
+Option A: 200 units will be preserved.
+Option B: 1/3 chance all 600 preserved, 2/3 chance none preserved.
+
+Choose A or B.",A|B,72% choose A (certain option) in gain frame,200,200,Indifferent (EV equal),"Framing effect: same EV, preference shifts by frame"
+framing__abstract__loss_frame,framing,abstract,loss_frame,loss,,,,,"600 units of Resource X are at risk.
+
+Option A: 400 units will be lost.
+Option B: 1/3 chance none lost, 2/3 chance all 600 lost.
+
+Choose A or B.",A|B,22% choose A (certain option) in loss frame,200,200,Indifferent (EV equal),Loss frame mirror: probabilities are exact mirror of gain frame
+loss_aversion__canonical__gain105__gamble_first,loss_aversion,canonical,gain105_gamble_first,,105,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 105 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),2.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain105__status_quo_first,loss_aversion,canonical,gain105_status_quo_first,,105,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 105 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,2.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain120__gamble_first,loss_aversion,canonical,gain120_gamble_first,,120,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 120 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),10.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain120__status_quo_first,loss_aversion,canonical,gain120_status_quo_first,,120,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 120 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,10.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain150__gamble_first,loss_aversion,canonical,gain150_gamble_first,,150,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 150 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),25.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain150__status_quo_first,loss_aversion,canonical,gain150_status_quo_first,,150,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 150 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,25.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain175__gamble_first,loss_aversion,canonical,gain175_gamble_first,,175,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 175 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),37.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain175__status_quo_first,loss_aversion,canonical,gain175_status_quo_first,,175,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 175 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,37.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain200__gamble_first,loss_aversion,canonical,gain200_gamble_first,,200,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 200 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),50.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain200__status_quo_first,loss_aversion,canonical,gain200_status_quo_first,,200,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 200 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,50.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain250__gamble_first,loss_aversion,canonical,gain250_gamble_first,,250,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 250 dollars, 50% chance to lose 100 dollars.
+Option B: 0 dollars (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),75.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__canonical__gain250__status_quo_first,loss_aversion,canonical,gain250_status_quo_first,,250,100,,A=statusquo B=gamble,"Option A: 0 dollars (no change).
+Option B: 50% chance to gain 250 dollars, 50% chance to lose 100 dollars.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,75.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain105__gamble_first,loss_aversion,novel,gain105_gamble_first,,105,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 105 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),2.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain105__status_quo_first,loss_aversion,novel,gain105_status_quo_first,,105,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 105 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,2.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain120__gamble_first,loss_aversion,novel,gain120_gamble_first,,120,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 120 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),10.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain120__status_quo_first,loss_aversion,novel,gain120_status_quo_first,,120,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 120 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,10.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain150__gamble_first,loss_aversion,novel,gain150_gamble_first,,150,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 150 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),25.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain150__status_quo_first,loss_aversion,novel,gain150_status_quo_first,,150,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 150 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,25.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain175__gamble_first,loss_aversion,novel,gain175_gamble_first,,175,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 175 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),37.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain175__status_quo_first,loss_aversion,novel,gain175_status_quo_first,,175,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 175 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,37.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain200__gamble_first,loss_aversion,novel,gain200_gamble_first,,200,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 200 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),50.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain200__status_quo_first,loss_aversion,novel,gain200_status_quo_first,,200,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 200 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,50.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain250__gamble_first,loss_aversion,novel,gain250_gamble_first,,250,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 250 points, 50% chance to lose 100 points.
+Option B: 0 points (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),75.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__novel__gain250__status_quo_first,loss_aversion,novel,gain250_status_quo_first,,250,100,,A=statusquo B=gamble,"Option A: 0 points (no change).
+Option B: 50% chance to gain 250 points, 50% chance to lose 100 points.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,75.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain105__gamble_first,loss_aversion,abstract,gain105_gamble_first,,105,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 105 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),2.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain105__status_quo_first,loss_aversion,abstract,gain105_status_quo_first,,105,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 105 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,2.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain120__gamble_first,loss_aversion,abstract,gain120_gamble_first,,120,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 120 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),10.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain120__status_quo_first,loss_aversion,abstract,gain120_status_quo_first,,120,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 120 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,10.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain150__gamble_first,loss_aversion,abstract,gain150_gamble_first,,150,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 150 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),25.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain150__status_quo_first,loss_aversion,abstract,gain150_status_quo_first,,150,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 150 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,25.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain175__gamble_first,loss_aversion,abstract,gain175_gamble_first,,175,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 175 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),37.5,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain175__status_quo_first,loss_aversion,abstract,gain175_status_quo_first,,175,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 175 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,37.5,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain200__gamble_first,loss_aversion,abstract,gain200_gamble_first,,200,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 200 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),50.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain200__status_quo_first,loss_aversion,abstract,gain200_status_quo_first,,200,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 200 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,50.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain250__gamble_first,loss_aversion,abstract,gain250_gamble_first,,250,100,,A=gamble B=statusquo,"Option A: 50% chance to gain 250 units, 50% chance to lose 100 units.
+Option B: 0 units (no change).
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),75.0,0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+loss_aversion__abstract__gain250__status_quo_first,loss_aversion,abstract,gain250_status_quo_first,,250,100,,A=statusquo B=gamble,"Option A: 0 units (no change).
+Option B: 50% chance to gain 250 units, 50% chance to lose 100 units.
+
+Choose A or B.",A|B,lambda 2.25-2.5 (accept when gain ~225-250),0,75.0,Accept gamble (all EVs positive),lambda estimate = gain_threshold / 100
+endowment__canonical__owner__price2,endowment,canonical,owner,,,,2,,"You own a coffee mug.
+
+Someone offers to exchange it for $2.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__canonical__non_owner__price2,endowment,canonical,non_owner,,,,2,,"You do not own a coffee mug.
+
+Someone offers to exchange $2 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__canonical__owner__price5,endowment,canonical,owner,,,,5,,"You own a coffee mug.
+
+Someone offers to exchange it for $5.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__canonical__non_owner__price5,endowment,canonical,non_owner,,,,5,,"You do not own a coffee mug.
+
+Someone offers to exchange $5 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__canonical__owner__price10,endowment,canonical,owner,,,,10,,"You own a coffee mug.
+
+Someone offers to exchange it for $10.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__canonical__non_owner__price10,endowment,canonical,non_owner,,,,10,,"You do not own a coffee mug.
+
+Someone offers to exchange $10 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__owner__price2,endowment,novel,owner,,,,2,,"You own a printed map.
+
+Someone offers to exchange it for $2.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__non_owner__price2,endowment,novel,non_owner,,,,2,,"You do not own a printed map.
+
+Someone offers to exchange $2 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__owner__price5,endowment,novel,owner,,,,5,,"You own a printed map.
+
+Someone offers to exchange it for $5.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__non_owner__price5,endowment,novel,non_owner,,,,5,,"You do not own a printed map.
+
+Someone offers to exchange $5 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__owner__price10,endowment,novel,owner,,,,10,,"You own a printed map.
+
+Someone offers to exchange it for $10.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__novel__non_owner__price10,endowment,novel,non_owner,,,,10,,"You do not own a printed map.
+
+Someone offers to exchange $10 for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__owner__price2,endowment,abstract,owner,,,,2,,"You possess a Object Q.
+
+Someone offers to exchange it for 2 units of currency.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__non_owner__price2,endowment,abstract,non_owner,,,,2,,"You do not possess a Object Q.
+
+Someone offers to exchange 2 units of currency for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__owner__price5,endowment,abstract,owner,,,,5,,"You possess a Object Q.
+
+Someone offers to exchange it for 5 units of currency.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__non_owner__price5,endowment,abstract,non_owner,,,,5,,"You do not possess a Object Q.
+
+Someone offers to exchange 5 units of currency for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__owner__price10,endowment,abstract,owner,,,,10,,"You possess a Object Q.
+
+Someone offers to exchange it for 10 units of currency.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+endowment__abstract__non_owner__price10,endowment,abstract,non_owner,,,,10,,"You do not possess a Object Q.
+
+Someone offers to exchange 10 units of currency for it.
+
+Would you exchange? (Yes/No)",Yes|No,WTA/WTP ratio ~2x (owners accept at half the rate),,,"Indifferent (identical object, identical price)",Endowment ratio = owner_accept / non_owner_accept at same price
+certainty_effect__canonical__allais_pair,certainty_effect,canonical,allais_pair,,,,,,"Choice 1:
+A: $4000 at 80% probability
+B: $3000 certain
+
+Choice 2:
+A: $4000 at 20% probability
+B: $3000 at 25% probability
+
+Answer ONLY in this format:
+(Choice1: A/B, Choice2: A/B)
+Do not explain.","(Choice1: A/B, Choice2: A/B)","~65% show Allais violation: B in Choice1, A in Choice2",C1:3200 C2:800,C1:3000 C2:750,A in both choices (higher EV),Violation = inconsistent choice pair. Choice2 = Choice1 x (1/4)
+certainty_effect__novel__allais_pair,certainty_effect,novel,allais_pair,,,,,,"Choice 1:
+A: 4000 energy credits at 80%
+B: 3000 energy credits certain
+
+Choice 2:
+A: 4000 energy credits at 20%
+B: 3000 energy credits at 25%
+
+Answer ONLY in this format:
+(Choice1: A/B, Choice2: A/B)
+Do not explain.","(Choice1: A/B, Choice2: A/B)","~65% show Allais violation: B in Choice1, A in Choice2",C1:3200 C2:800,C1:3000 C2:750,A in both choices (higher EV),Violation = inconsistent choice pair. Choice2 = Choice1 x (1/4)
+certainty_effect__abstract__allais_pair,certainty_effect,abstract,allais_pair,,,,,,"Choice 1:
+A: 4000 units at 80% probability
+B: 3000 units at 100% probability
+
+Choice 2:
+A: 4000 units at 20% probability
+B: 3000 units at 25% probability
+
+Answer ONLY in this format:
+(Choice1: A/B, Choice2: A/B)
+Do not explain.","(Choice1: A/B, Choice2: A/B)","~65% show Allais violation: B in Choice1, A in Choice2",C1:3200 C2:800,C1:3000 C2:750,A in both choices (higher EV),Violation = inconsistent choice pair. Choice2 = Choice1 x (1/4)
+status_quo__canonical__default_stay_first,status_quo,canonical,default_stay_first,,,,,"default present, stay=A","You are enrolled in Plan A.
+Both plans have identical outcomes.
+Plan A is currently active.
+
+Option A: Stay with Plan A
+Option B: Switch to Plan B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__canonical__default_switch_first,status_quo,canonical,default_switch_first,,,,,"default present, stay=B (position control)","You are enrolled in Plan A.
+Both plans have identical outcomes.
+Plan A is currently active.
+
+Option A: Switch to Plan B
+Option B: Stay with Plan A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__canonical__no_default_stay_first,status_quo,canonical,no_default_stay_first,,,,,"no default, stay=A (baseline)","Choose between two plans.
+Both have identical outcomes.
+Neither is currently active.
+
+Option A: Plan A
+Option B: Plan B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__canonical__no_default_switch_first,status_quo,canonical,no_default_switch_first,,,,,"no default, stay=B (baseline position control)","Choose between two plans.
+Both have identical outcomes.
+Neither is currently active.
+
+Option A: Plan B
+Option B: Plan A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__novel__default_stay_first,status_quo,novel,default_stay_first,,,,,"default present, stay=A","Your system uses Configuration A.
+Both configurations perform identically.
+Configuration A is currently active.
+
+Option A: Stay with Configuration A
+Option B: Switch to Configuration B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__novel__default_switch_first,status_quo,novel,default_switch_first,,,,,"default present, stay=B (position control)","Your system uses Configuration A.
+Both configurations perform identically.
+Configuration A is currently active.
+
+Option A: Switch to Configuration B
+Option B: Stay with Configuration A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__novel__no_default_stay_first,status_quo,novel,no_default_stay_first,,,,,"no default, stay=A (baseline)","Choose between two configurations.
+Both have identical performance.
+Neither is currently active.
+
+Option A: Configuration A
+Option B: Configuration B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__novel__no_default_switch_first,status_quo,novel,no_default_switch_first,,,,,"no default, stay=B (baseline position control)","Choose between two configurations.
+Both have identical performance.
+Neither is currently active.
+
+Option A: Configuration B
+Option B: Configuration A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__abstract__default_stay_first,status_quo,abstract,default_stay_first,,,,,"default present, stay=A","You are in State A.
+Both states have identical properties.
+State A is currently active.
+
+Option A: Stay with State A
+Option B: Switch to State B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__abstract__default_switch_first,status_quo,abstract,default_switch_first,,,,,"default present, stay=B (position control)","You are in State A.
+Both states have identical properties.
+State A is currently active.
+
+Option A: Switch to State B
+Option B: Stay with State A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__abstract__no_default_stay_first,status_quo,abstract,no_default_stay_first,,,,,"no default, stay=A (baseline)","Choose between two states.
+Both have identical properties.
+Neither is currently active.
+
+Option A: State A
+Option B: State B
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+status_quo__abstract__no_default_switch_first,status_quo,abstract,no_default_switch_first,,,,,"no default, stay=B (baseline position control)","Choose between two states.
+Both have identical properties.
+Neither is currently active.
+
+Option A: State B
+Option B: State A
+
+Choose A or B.",A|B,~40pp lift in stay rate from default,identical,identical,Indifferent,Default effect = P(stay|C1+C2) - P(stay|C3+C4). Position effect = P(stay|C1+C3) - P(stay|C2+C4).
+contamination__framing,framing,contamination_check,contamination,,,,,run in separate session before experiment,"The following is a classic problem in behavioral economics:
+
+""600 people face a deadly disease. Program A saves 200 for certain. Program B offers a 1/3 chance of saving all 600 and a 2/3 chance of saving none.""
+
+Without answering it yourself: what do most humans typically choose when this problem is presented with a gain frame (saves) versus a loss frame (deaths)? Describe the typical human pattern of responses.",free_text,,,,,Score 0-3. Score >= 2 = high contamination risk. Flag in paper.
+contamination__loss_aversion,loss_aversion,contamination_check,contamination,,,,,run in separate session before experiment,"In behavioral economics research on loss aversion, when people are offered a gamble with a 50% chance to gain some amount and a 50% chance to lose $100:
+
+Without answering it yourself: what does the research say about how large the potential gain typically needs to be before most humans will accept such a gamble? What is the typical lambda (λ) coefficient reported?",free_text,,,,,Score 0-3. Score >= 2 = high contamination risk. Flag in paper.
+contamination__endowment,endowment,contamination_check,contamination,,,,,run in separate session before experiment,"In behavioral economics, the endowment effect refers to a well-known pattern in buying and selling experiments using everyday objects like mugs.
+
+Without answering it yourself: describe what researchers typically find when they compare the minimum price owners will accept to sell an object versus the maximum price non-owners will pay to acquire the same object.",free_text,,,,,Score 0-3. Score >= 2 = high contamination risk. Flag in paper.
+contamination__certainty_effect,certainty_effect,contamination_check,contamination,,,,,run in separate session before experiment,"The Allais paradox involves two choice problems. In the first, people choose between a certain $3000 and an 80% chance at $4000. In the second, they choose between a 25% chance at $3000 and a 20% chance at $4000.
+
+Without answering it yourself: describe what pattern of choices the Allais paradox demonstrates and why it violates expected utility theory.",free_text,,,,,Score 0-3. Score >= 2 = high contamination risk. Flag in paper.
+contamination__status_quo,status_quo,contamination_check,contamination,,,,,run in separate session before experiment,"In behavioral economics, status quo bias and default effects have been studied extensively in contexts like organ donation and retirement savings.
+
+Without answering it yourself: describe what researchers typically find about how setting a default option affects people's choices, even when the outcomes of all options are identical.",free_text,,,,,Score 0-3. Score >= 2 = high contamination risk. Flag in paper.
