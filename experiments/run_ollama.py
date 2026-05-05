@@ -10,7 +10,7 @@ Requirements:
 Usage:
     python run_ollama.py                        # 10 trials, temp 0.7 (quick test)
     python run_ollama.py --trials 50            # full run
-    python run_ollama.py --trials 50 --temps 0.0 0.7 1.0  # all temperatures
+    python run_ollama.py --trials 50 --temps 0.3 0.7   # all temperatures
     python run_ollama.py --bias framing         # single bias only
     python run_ollama.py --contamination-only   # contamination pre-check only
 
