@@ -1,0 +1,240 @@
+{
+  "experiment": "LLM Behavioral Bias Study — Inherited vs. Intrinsic Irrationality",
+  "version": "1.0",
+  "paper": "CAISc 2026",
+  "models": [
+    {
+      "id": "gpt-4o-mini",
+      "provider": "Azure AI Foundry",
+      "type": "proprietary",
+      "temperatures": [0.0, 0.7]
+    },
+    {
+      "id": "gemma3:4b",
+      "provider": "Ollama (local)",
+      "type": "open-source",
+      "parameters": "4B (Q4_K_M quantised)",
+      "temperatures": [0.3, 0.7]
+    }
+  ],
+  "trials_per_condition": 50,
+  "total_trials": 15000,
+  "parse_failure_rate": 0.0,
+
+  "biases": [
+    {
+      "id": "framing",
+      "description": "Tests whether models shift preference when the same problem is framed in gain vs loss terms",
+      "surfaces": ["canonical", "novel", "abstract"],
+      "conditions": ["gain_frame", "loss_frame"],
+      "expected_parse": "A|B",
+      "measure": "delta_P(A) = P(A|gain) - P(A|loss)",
+      "human_baseline": "delta ≈ +0.50 (72% choose A under gain, 22% under loss)",
+      "math_equivalence": {
+        "ev_option_a": 200,
+        "ev_option_b": 200,
+        "variance": 80000,
+        "note": "EV(A) = EV(B) = 200 in all frames and surfaces"
+      },
+      "canonical_source": "Tversky & Kahneman (1981) Asian Disease Problem",
+      "prompts": {
+        "canonical": {
+          "gain_frame": "600 people are at risk.\n\nProgram A: 200 will be saved.\nProgram B: 1/3 chance all 600 saved, 2/3 chance none saved.\n\nChoose A or B. Reply with only the letter A or B.",
+          "loss_frame": "600 people are at risk.\n\nProgram A: 400 will die.\nProgram B: 1/3 chance none die, 2/3 chance all 600 die.\n\nChoose A or B. Reply with only the letter A or B."
+        },
+        "novel": {
+          "gain_frame": "600 items are in a damaged warehouse.\n\nPlan A: 200 items will be preserved.\nPlan B: 1/3 chance all 600 preserved, 2/3 chance none preserved.\n\nChoose A or B. Reply with only the letter A or B.",
+          "loss_frame": "600 items are in a damaged warehouse.\n\nPlan A: 400 items will be lost.\nPlan B: 1/3 chance none lost, 2/3 chance all 600 lost.\n\nChoose A or B. Reply with only the letter A or B."
+        },
+        "abstract": {
+          "gain_frame": "600 units of Resource X are at risk.\n\nOption A: 200 units will be preserved.\nOption B: 1/3 chance all 600 preserved, 2/3 chance none preserved.\n\nChoose A or B. Reply with only the letter A or B.",
+          "loss_frame": "600 units of Resource X are at risk.\n\nOption A: 400 units will be lost.\nOption B: 1/3 chance none lost, 2/3 chance all 600 lost.\n\nChoose A or B. Reply with only the letter A or B."
+        }
+      },
+      "contamination_prompt": "The following is a classic problem in behavioral economics:\n\n\"600 people face a deadly disease. Program A saves 200 for certain. Program B offers a 1/3 chance of saving all 600 and a 2/3 chance of saving none.\"\n\nWithout answering it yourself: what do most humans typically choose when this problem is presented with a gain frame (saves) versus a loss frame (deaths)? Describe the typical human pattern of responses."
+    },
+
+    {
+      "id": "loss_aversion",
+      "description": "Estimates λ (loss aversion coefficient) via gain sweep. λ = gain threshold at which model accepts / fixed loss (100)",
+      "surfaces": ["canonical", "novel", "abstract"],
+      "surface_units": {
+        "canonical": "dollars",
+        "novel": "points",
+        "abstract": "units"
+      },
+      "conditions": ["gamble_first", "status_quo_first"],
+      "expected_parse": "A|B",
+      "measure": "lambda_hat = interpolated_gain_threshold / 100",
+      "human_baseline": "lambda ≈ 2.25–2.5 (Tversky & Kahneman 1992)",
+      "gain_sweep": [105, 120, 150, 175, 200, 250],
+      "loss_fixed": 100,
+      "math_equivalence": {
+        "ev_formula": "EV(gamble) = 0.5 * G - 0.5 * 100",
+        "ev_by_gain": {
+          "105": 2.5,
+          "120": 10.0,
+          "150": 25.0,
+          "175": 37.5,
+          "200": 50.0,
+          "250": 75.0
+        },
+        "note": "All EVs positive — rational agent should accept every trial"
+      },
+      "prompt_template": {
+        "gamble_first": "Option A: 50% chance to gain {GAIN} {UNIT}, 50% chance to lose 100 {UNIT}.\nOption B: 0 {UNIT} (no change).\n\nChoose A or B. Reply with only the letter A or B.",
+        "status_quo_first": "Option A: 0 {UNIT} (no change).\nOption B: 50% chance to gain {GAIN} {UNIT}, 50% chance to lose 100 {UNIT}.\n\nChoose A or B. Reply with only the letter A or B."
+      },
+      "contamination_prompt": "In behavioral economics research on loss aversion, when people are offered a gamble with a 50% chance to gain some amount and a 50% chance to lose $100:\n\nWithout answering it yourself: what does the research say about how large the potential gain typically needs to be before most humans will accept such a gamble? What is the typical lambda (λ) coefficient reported?"
+    },
+
+    {
+      "id": "endowment",
+      "description": "Tests ownership effect — do models value objects more when stated to own them?",
+      "surfaces": ["canonical", "novel", "abstract"],
+      "surface_objects": {
+        "canonical": "coffee mug",
+        "novel": "printed map",
+        "abstract": "Object Q"
+      },
+      "conditions": ["owner", "non_owner"],
+      "price_sweep": [2, 5, 10],
+      "expected_parse": "Yes|No",
+      "measure": "owner_accept_rate / non_owner_accept_rate at each price",
+      "human_baseline": "WTA/WTP ratio ≈ 2x (Kahneman, Knetsch & Thaler 1991)",
+      "math_equivalence": {
+        "note": "Same verb (exchange), same object, same price, opposite direction. No buy/sell asymmetry."
+      },
+      "prompt_template": {
+        "owner": "You {OWN_VERB} a {OBJECT}.\n\nSomeone offers to exchange it for {PRICE_STR}.\n\nWould you exchange? Reply with only Yes or No.",
+        "non_owner": "You do not {OWN_VERB} a {OBJECT}.\n\nSomeone offers to exchange {PRICE_STR} for it.\n\nWould you exchange? Reply with only Yes or No.",
+        "own_verb": {
+          "canonical": "own",
+          "novel": "own",
+          "abstract": "possess"
+        },
+        "price_format": {
+          "canonical": "${PRICE}",
+          "novel": "${PRICE}",
+          "abstract": "{PRICE} units of currency"
+        }
+      },
+      "contamination_prompt": "In behavioral economics, the endowment effect refers to a well-known pattern in buying and selling experiments using everyday objects like mugs.\n\nWithout answering it yourself: describe what researchers typically find when they compare the minimum price owners will accept to sell an object versus the maximum price non-owners will pay to acquire the same object."
+    },
+
+    {
+      "id": "certainty_effect",
+      "description": "Allais paradox — tests for violation of independence axiom under certainty premium",
+      "surfaces": ["canonical", "novel", "abstract"],
+      "conditions": ["allais_pair"],
+      "expected_parse": "(Choice1: A|B, Choice2: A|B)",
+      "measure": "P(Allais violation) = P(B in Choice1 AND A in Choice2)",
+      "human_baseline": "~65% show violation pattern (Allais 1953)",
+      "response_patterns": {
+        "(Choice1: B, Choice2: A)": "Allais violation — inconsistent, matches human baseline",
+        "(Choice1: B, Choice2: B)": "Consistent risk aversion",
+        "(Choice1: A, Choice2: A)": "Rational (EV-maximising)",
+        "(Choice1: A, Choice2: B)": "Reverse violation — inconsistent in opposite direction"
+      },
+      "math_equivalence": {
+        "choice1_ev_a": 3200,
+        "choice1_ev_b": 3000,
+        "choice2_ev_a": 800,
+        "choice2_ev_b": 750,
+        "scaling": "Choice2 = Choice1 × (1/4): 0.80→0.20, 1.00→0.25",
+        "rational_choice": "A in both (higher EV)"
+      },
+      "prompts": {
+        "canonical": "Choice 1:\nA: $4000 at 80% probability\nB: $3000 certain\n\nChoice 2:\nA: $4000 at 20% probability\nB: $3000 at 25% probability\n\nAnswer ONLY in this exact format: (Choice1: A/B, Choice2: A/B)\nDo not explain.",
+        "novel": "Choice 1:\nA: 4000 energy credits at 80%\nB: 3000 energy credits certain\n\nChoice 2:\nA: 4000 energy credits at 20%\nB: 3000 energy credits at 25%\n\nAnswer ONLY in this exact format: (Choice1: A/B, Choice2: A/B)\nDo not explain.",
+        "abstract": "Choice 1:\nA: 4000 units at 80% probability\nB: 3000 units at 100% probability\n\nChoice 2:\nA: 4000 units at 20% probability\nB: 3000 units at 25% probability\n\nAnswer ONLY in this exact format: (Choice1: A/B, Choice2: A/B)\nDo not explain."
+      },
+      "contamination_prompt": "The Allais paradox involves two choice problems. In the first, people choose between a certain $3000 and an 80% chance at $4000. In the second, they choose between a 25% chance at $3000 and a 20% chance at $4000.\n\nWithout answering it yourself: describe what pattern of choices the Allais paradox demonstrates and why it violates expected utility theory."
+    },
+
+    {
+      "id": "status_quo",
+      "description": "2×2 orthogonal design separating genuine default effect from Option A position preference",
+      "surfaces": ["canonical", "novel", "abstract"],
+      "surface_labels": {
+        "canonical": {"stay": "Plan A", "switch": "Plan B", "plural": "plans", "outcome_word": "outcomes"},
+        "novel": {"stay": "Configuration A", "switch": "Configuration B", "plural": "configurations", "outcome_word": "performance"},
+        "abstract": {"stay": "State A", "switch": "State B", "plural": "states", "outcome_word": "properties"}
+      },
+      "conditions": [
+        "default_stay_first",
+        "default_switch_first",
+        "no_default_stay_first",
+        "no_default_switch_first"
+      ],
+      "condition_design": {
+        "C1_default_stay_first":      {"default_present": true,  "stay_as_option_a": true},
+        "C2_default_switch_first":    {"default_present": true,  "stay_as_option_a": false},
+        "C3_no_default_stay_first":   {"default_present": false, "stay_as_option_a": true},
+        "C4_no_default_switch_first": {"default_present": false, "stay_as_option_a": false}
+      },
+      "effect_estimation": {
+        "default_effect":  "P(stay | C1+C2) - P(stay | C3+C4)",
+        "position_effect": "P(stay | C1+C3) - P(stay | C2+C4)"
+      },
+      "expected_parse": "A|B",
+      "measure": "default_effect and position_effect (independently estimable)",
+      "human_baseline": "default effect ≈ +40 percentage points (Johnson & Goldstein 2003)",
+      "prompt_templates": {
+        "default_stay_first": "{CONTEXT}\n{STAY_LABEL} is currently active.\n\nOption A: Stay with {STAY_LABEL}\nOption B: Switch to {SWITCH_LABEL}\n\nChoose A or B. Reply with only the letter A or B.",
+        "default_switch_first": "{CONTEXT}\n{STAY_LABEL} is currently active.\n\nOption A: Switch to {SWITCH_LABEL}\nOption B: Stay with {STAY_LABEL}\n\nChoose A or B. Reply with only the letter A or B.",
+        "no_default_stay_first": "Choose between two {PLURAL}.\nBoth have identical {OUTCOME_WORD}.\nNeither is currently active.\n\nOption A: {STAY_LABEL}\nOption B: {SWITCH_LABEL}\n\nChoose A or B. Reply with only the letter A or B.",
+        "no_default_switch_first": "Choose between two {PLURAL}.\nBoth have identical {OUTCOME_WORD}.\nNeither is currently active.\n\nOption A: {SWITCH_LABEL}\nOption B: {STAY_LABEL}\n\nChoose A or B. Reply with only the letter A or B."
+      },
+      "context_strings": {
+        "canonical": "You are enrolled in Plan A.\nBoth plans have identical outcomes.",
+        "novel": "Your system uses Configuration A.\nBoth configurations perform identically.",
+        "abstract": "You are in State A.\nBoth states have identical properties."
+      },
+      "contamination_prompt": "In behavioral economics, status quo bias and default effects have been studied extensively in contexts like organ donation and retirement savings.\n\nWithout answering it yourself: describe what researchers typically find about how setting a default option affects people's choices, even when the outcomes of all options are identical."
+    }
+  ],
+
+  "contamination_check": {
+    "run_before_experiment": true,
+    "separate_session": true,
+    "score_method": "human_rater_0_to_3",
+    "scoring_rubric": {
+      "0": "No relevant knowledge",
+      "1": "General awareness without quantitative detail",
+      "2": "Correct directional description",
+      "3": "Accurate recall of quantitative behavioral statistics"
+    },
+    "threshold_flag": 2,
+    "results": {
+      "gpt-4o-mini": {"framing": 3, "loss_aversion": 3, "endowment": 3, "certainty_effect": 3, "status_quo": 3},
+      "gemma3:4b":   {"framing": 3, "loss_aversion": 3, "endowment": 3, "certainty_effect": 3, "status_quo": 3}
+    }
+  },
+
+  "trial_schema": {
+    "trial_id":      "string — unique: model__bias__surface__condition__tTEMP__NNN",
+    "model":         "string — gpt-4o-mini or gemma3:4b",
+    "bias":          "string — framing | loss_aversion | endowment | certainty_effect | status_quo",
+    "surface":       "string — canonical | novel | abstract",
+    "condition":     "string — full condition label",
+    "temperature":   "number",
+    "gain_value":    "number|null — loss_aversion only",
+    "loss_value":    "number|null — loss_aversion only",
+    "price_value":   "number|null — endowment only",
+    "prompt":        "string — exact prompt sent",
+    "raw_response":  "string — exact model response",
+    "parsed_choice": "string — A | B | Yes | No | (Choice1: X, Choice2: Y)",
+    "parse_failed":  "boolean",
+    "timestamp":     "ISO8601 UTC"
+  },
+
+  "statistical_analysis": {
+    "binary_choices": "chi-square test with continuity correction",
+    "effect_size": "Cohen's h for proportions",
+    "lambda_estimation": "interpolated gain threshold where accept rate crosses 0.5, divided by 100",
+    "significance_thresholds": {"*": 0.05, "**": 0.01, "***": 0.001},
+    "confidence_intervals": "95% Wilson score intervals for key proportions",
+    "temperature_stability": "all key findings replicated across all tested temperatures"
+  }
+}
